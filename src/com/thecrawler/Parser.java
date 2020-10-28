@@ -5,18 +5,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    private final Pattern RGX_HAND_INFO = Pattern.compile("PokerStars Hand #([0-9]*):  Hold\\'em No Limit \\(([$€£])([0-9\\.]*)\\/[$€£]([0-9\\.]*) .*\\) - (.*)");
-    private final Pattern RGX_BTN_POSITION = Pattern.compile("Table '.*' 6-max Seat #([1-6]) is the button");
-    private final Pattern RGX_PLAYER_INFO = Pattern.compile("Seat ([1-6]): (.*) \\([$€£]([0-9\\.]*) in chips\\)");
-    private final Pattern RGX_BLIND_POST = Pattern.compile("(.*): posts (?:small|big) blind [$€£]([0-9\\.]*)");
+    private final Pattern RGX_HAND_INFO = Pattern.compile("PokerStars Hand #([0-9]*): {1,2}Hold'em No Limit \\(([$€£])([0-9.]*)/[$€£]([0-9.]*) .*\\) - (.*)");
+    private final Pattern RGX_BTN_POSITION = Pattern.compile("Table '.*' [2-9]-max Seat #([1-9]) is the button");
+    private final Pattern RGX_PLAYER_INFO = Pattern.compile("Seat ([1-9]): (.*) \\([$€£]([0-9.]*) in chips\\)");
+    private final Pattern RGX_BLIND_POST = Pattern.compile("(.*): posts (?:small|big) blind [$€£]([0-9.]*)");
     private final Pattern RGX_STREET_INDICATOR = Pattern.compile("\\*\\*\\* (FLOP|TURN|RIVER|SHOW DOWN) \\*\\*\\*");
     private final Pattern RGX_PLAYER_FOLDED = Pattern.compile("(.*): folds");
-    private final Pattern RGX_PLAYER_ACTION = Pattern.compile("(.*): (calls|bets|raises) [$€£]([0-9\\.]*)(?: to [$€£]|)([0-9\\.]*|)");
-    private final Pattern RGX_POT_AND_RAKE = Pattern.compile("Total pot [$€£]([0-9\\.]*) \\| Rake [$€£]([0-9\\.]*)");
-    private final Pattern RGX_BOARD = Pattern.compile("Board \\[(.*)\\]");
-    private final Pattern RGX_PLAYER_CARDS = Pattern.compile("(.*): shows \\[(.*)\\]");
-    private final Pattern RGX_UNCALLED_BET = Pattern.compile("Uncalled bet \\([$€£]([0-9\\.]*)\\) returned to (.*)");
-    private final Pattern RGX_PLAYER_COLLECTED = Pattern.compile("(.*) collected [$€£]([0-9\\.]*) from pot");
+    private final Pattern RGX_PLAYER_ACTION = Pattern.compile("(.*): (calls|bets|raises) [$€£]([0-9.]*)(?: to [$€£]|)([0-9.]*|)");
+    private final Pattern RGX_POT_AND_RAKE = Pattern.compile("Total pot [$€£]([0-9.]*) \\| Rake [$€£]([0-9.]*)");
+    private final Pattern RGX_BOARD = Pattern.compile("Board \\[(.*)]");
+    private final Pattern RGX_PLAYER_CARDS = Pattern.compile("(.*): shows \\[(.*)]");
+    private final Pattern RGX_UNCALLED_BET = Pattern.compile("Uncalled bet \\([$€£]([0-9.]*)\\) returned to (.*)");
+    private final Pattern RGX_PLAYER_COLLECTED = Pattern.compile("(.*) collected [$€£]([0-9.]*) from pot");
 
     private Hand hand;
 
