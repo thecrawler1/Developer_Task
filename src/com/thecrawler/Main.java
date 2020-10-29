@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         Locale.setDefault(new Locale("en", "US"));
+        Parser parser = new Parser();
         // Iterate for all file/directory paths
         for (String path: args) {
             ArrayList<String> handHistories;
@@ -18,7 +19,6 @@ public class Main {
                 continue;
             }
             ArrayList<ArrayList<String>> hands = Util.extractHands(handHistories);
-            Parser parser = new Parser();
             for (ArrayList<String> hand: hands) {
                 try {
                     parser.parse(hand);

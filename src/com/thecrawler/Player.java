@@ -13,8 +13,6 @@ public class Player {
         this.nickname = nickname;
         this.startingStack = startingStack;
         this.newStack = startingStack;
-        this.streetFolded = null;
-        this.cards = null;
     }
 
     public int getSeat() {
