@@ -10,18 +10,18 @@ public class Main {
         Locale.setDefault(new Locale("en", "US"));
         // Iterate for all file/directory paths
         for (String path: args) {
-            ArrayList<String> file;
+            ArrayList<String> handHistories;
             try {
-                file = Util.readHandHistories(path);
+                handHistories = Util.readHandHistories(path);
             } catch (FileNotFoundException e) {
                 System.err.println("Invalid file path: " + path);
                 continue;
             }
-            ArrayList<ArrayList<String>> handHistories = Util.extractHands(file);
+            ArrayList<ArrayList<String>> hands = Util.extractHands(handHistories);
             Parser parser = new Parser();
-            for (ArrayList<String> handHistory: handHistories) {
+            for (ArrayList<String> hand: hands) {
                 try {
-                    parser.parse(handHistory);
+                    parser.parse(hand);
                     parser.print();
                 } catch (Exception e) {
                     System.err.println("Error in parse hand.\n");
