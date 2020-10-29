@@ -1,8 +1,8 @@
 package com.thecrawler;
 
 public class Player {
-    private int seat;
-    private String nickname;
+    private final int seat;
+    private final String nickname;
     private final float startingStack;
     private float newStack;
     private String streetFolded; // Street that player folded (null if not folded)
@@ -21,16 +21,8 @@ public class Player {
         return seat;
     }
 
-    public void setSeat(int seat) {
-        this.seat = seat;
-    }
-
     public String getNickname() {
         return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public float getStartingStack() {

@@ -35,23 +35,23 @@ public class Util {
     public static ArrayList<ArrayList<String>> extractHands(ArrayList<String> lines) {
         Pattern firstLineHandHistory = Pattern.compile("PokerStars Hand #([0-9]*): {1,2}Hold'em No Limit \\(([$€£])([0-9.]*)/[$€£]([0-9.]*) .*\\) - (.*)");
         ArrayList<ArrayList<String>> hands = new ArrayList<>();
-        ArrayList<String> aux = new ArrayList<>();
+        ArrayList<String> handHistory = new ArrayList<>();
         for (String line: lines) {
             Matcher matcher = firstLineHandHistory.matcher(line);
             boolean isFirstLine = matcher.find();
             if (isFirstLine) {
-                if (aux.size() > 0) {
-                    hands.add(new ArrayList<>(aux));
-                    aux.clear();
+                if (handHistory.size() > 0) {
+                    hands.add(new ArrayList<>(handHistory));
+                    handHistory.clear();
                 }
-                aux = new ArrayList<>();
+                handHistory = new ArrayList<>();
             }
             if (line.length() > 0) {
-                aux.add(line);
+                handHistory.add(line);
             }
         }
-        if (aux.size() > 0) {
-            hands.add(new ArrayList<>(aux));
+        if (handHistory.size() > 0) {
+            hands.add(new ArrayList<>(handHistory));
         }
         return hands;
     }

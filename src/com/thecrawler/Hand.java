@@ -23,65 +23,88 @@ public class Hand {
 
     public void print() {
         System.out.println("Hand ID: " + handId);
-        System.out.println("The Blinds: " + currency + String.format("%.2f", smallBlindValue) + "/" + currency + String.format("%.2f", bigBlindValue));
+        System.out.println("The Blinds: " + formatMoney(currency, smallBlindValue) + "/" + formatMoney(currency, bigBlindValue));
         System.out.println("Date and Time: " + dateAndTime);
         System.out.println("Button position: " + buttonPosition);
+        printNamesStacksAndSeats();
+        printPlayersThatFoldedPreflop();
+        printPlayerThatPlayedFlopTurnOrRiver();
+        System.out.println("Total pot and rake\n - " + formatMoney(currency, pot) + ", " + formatMoney(currency, rake));
+        if (board != null) {
+            System.out.println("The Board\n - " + board);
+        }
+        printPlayersThatReachTheShowdown();
+        printStackBalanceOfEachPlayer();
+        System.out.println();
+    }
+
+    private void printNamesStacksAndSeats() {
         System.out.println("Players names, stacks and seats:");
         for (Player player: players) {
-            System.out.println(" - " + player.getNickname() + ", " + currency + String.format("%.2f", player.getStartingStack()) + ", " + player.getSeat());
+            System.out.println(" - " + player.getNickname() + ", " + formatMoney(currency, player.getStartingStack()) + ", " + player.getSeat());
         }
-        // Players that folded preflop (if any)
-        boolean aux = true;
+    }
+
+    private void printPlayersThatFoldedPreflop() {
+        boolean firstOccurrence = true;
         for (Player player: players) {
             String streetFolded = player.getStreetFolded();
             if (streetFolded != null && streetFolded.equals("preflop")) {
-                if (aux) {
+                if (firstOccurrence) {
                     System.out.println("Players that folded preflop (if any)");
-                    aux = false;
+                    firstOccurrence = false;
                 }
                 System.out.println(" - " + player.getNickname());
             }
         }
-        // Player that played the flop, turn and river (if any)
+    }
+
+    private void printPlayerThatPlayedFlopTurnOrRiver() {
         String[] streets = {"flop", "turn", "river", "show down"};
         for (int i = 0; i <= Math.min(Arrays.asList(streets).indexOf(lastStreet), 2); i++) {
             String street = streets[i];
-            aux = true;
+            boolean firstOccurrence = true;
             for (Player player: players) {
                 String streetFolded = player.getStreetFolded();
                 if (streetFolded == null || Arrays.asList(streets).indexOf(streetFolded) >= i) {
-                    if (aux) {
+                    if (firstOccurrence) {
                         System.out.println("Players that played the " + street + " (if any)");
-                        aux = false;
+                        firstOccurrence = false;
                     }
                     System.out.println(" - " + player.getNickname());
                 }
             }
         }
-        System.out.println("Total pot and rake\n - " + currency + String.format("%.2f", pot) + ", " + currency + String.format("%.2f", rake));
-        if (board != null) {
-            System.out.println("The Board\n - " + board);
-        }
-        aux = true;
-        // Players that reach the showdown and theirs hole cards
+    }
+
+    private void printPlayersThatReachTheShowdown() {
+        boolean firstOccurrence = true;
         if (lastStreet.equals("show down")) {
             for (Player player: players) {
-                if (player.getStreetFolded() == null) {
-                    if (aux) {
+                if (player.getStreetFolded() == null) { // Player reach the showdown when streetFolded == null
+                    if (firstOccurrence) {
                         System.out.println("Players that reach the showdown and theirs hole cards");
-                        aux = false;
+                        firstOccurrence = false;
                     }
                     String cards = player.getCards();
                     System.out.println(" - " + player.getNickname() + ": " + (cards != null ? cards : "mucks"));
                 }
             }
         }
+    }
+
+    private void printStackBalanceOfEachPlayer() {
         System.out.println("The stack balance of each player after the hand in % (2 decimal places)");
         for (Player player: players) {
             float stackDiff = (100 * (player.getNewStack() - player.getStartingStack()) / player.getStartingStack());
-            System.out.println(" - " + player.getNickname() + ": " + currency + String.format("%.2f", player.getNewStack()) + (stackDiff > 0 ? " (+" : " (") + String.format("%.2f", stackDiff) + "%)");
+            System.out.print(" - " + player.getNickname() + ": " + formatMoney(currency, player.getNewStack()));
+            System.out.print(stackDiff > 0 ? " (+" : " (");
+            System.out.println(String.format("%.2f", stackDiff) + "%)");
         }
-        System.out.println();
+    }
+
+    private String formatMoney(String currency, float value) {
+        return currency.concat(String.format("%.2f", value));
     }
 
     public String getHandId() {
