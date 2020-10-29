@@ -149,6 +149,11 @@ public class Hand {
         return null;
     }
 
+    public void sumStackToPlayerByNickname(float sum, String nickname) {
+        Player player = getPlayerByNickname(nickname);
+        player.setNewStack(player.getNewStack() + sum);
+    }
+
     public float getPot() {
         return pot;
     }

@@ -83,8 +83,7 @@ public class Parser {
         if (matcher.find()) {
             String nickname = matcher.group(1);
             float value = Float.parseFloat(matcher.group(2));
-            Player player = hand.getPlayerByNickname(nickname);
-            player.setNewStack(player.getNewStack() - value);
+            hand.sumStackToPlayerByNickname(-value, nickname);
         }
     }
 
@@ -110,8 +109,7 @@ public class Parser {
             String nickname = matcher.group(1);
             String action = matcher.group(2);
             float value = Float.parseFloat(matcher.group(action.equals("raises") ? 4 : 3));
-            Player player = hand.getPlayerByNickname(nickname);
-            player.setNewStack(player.getNewStack() - value);
+            hand.sumStackToPlayerByNickname(-value, nickname);
         }
     }
 
@@ -148,8 +146,7 @@ public class Parser {
         if (matcher.find()) {
             float value = Float.parseFloat(matcher.group(1));
             String nickname = matcher.group(2);
-            Player player = hand.getPlayerByNickname(nickname);
-            player.setNewStack(player.getNewStack() + value);
+            hand.sumStackToPlayerByNickname(value, nickname);
         }
     }
 
@@ -158,8 +155,7 @@ public class Parser {
         if (matcher.find()) {
             String nickname = matcher.group(1);
             float value = Float.parseFloat(matcher.group(2));
-            Player player = hand.getPlayerByNickname(nickname);
-            player.setNewStack(player.getNewStack() + value);
+            hand.sumStackToPlayerByNickname(value, nickname);
         }
     }
 }
