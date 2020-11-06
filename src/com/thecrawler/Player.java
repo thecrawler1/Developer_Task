@@ -1,6 +1,7 @@
 package com.thecrawler;
 
 public class Player {
+
     private final int seat;
     private final String nickname;
     private final float startingStack;

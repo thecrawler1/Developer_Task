@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Hand {
+
     private String handId;
     private String currency;
     private float smallBlindValue;

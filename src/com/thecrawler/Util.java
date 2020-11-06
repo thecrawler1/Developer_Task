@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Util {
+
     public static ArrayList<String> readHandHistories(String path) throws FileNotFoundException {
         ArrayList<String> lines = new ArrayList<>();
         File fileOrDirectory = new File(path);
